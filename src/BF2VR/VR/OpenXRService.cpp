@@ -37,7 +37,7 @@ int OpenXRService::Initialize() {
 
     // Step 2: Create the instance
     createInfo.applicationInfo.apiVersion = XR_API_VERSION_1_0;
-    strcpy_s(createInfo.applicationInfo.applicationName, "Star Wars Battlefront II VR");
+    strcpy_s(createInfo.applicationInfo.applicationName, "Star Wars Battlefront VR");
     XrResult result = xrCreateInstance(&createInfo, &xrInstance);
     if (result != XR_SUCCESS) {
         Logging::Log("[OPENXR] Could not create instance", result);

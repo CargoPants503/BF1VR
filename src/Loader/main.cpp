@@ -94,26 +94,26 @@ int main() {
     CHAR my_documents[MAX_PATH];
     HRESULT result = SHGetFolderPath(nullptr, CSIDL_PERSONAL, nullptr, SHGFP_TYPE_CURRENT, my_documents);
     if (result != S_OK) {
-        std::cout << "[BF2VR] Failed to get My Documents folder path for crash logs" << std::endl;
+        std::cout << "[BF1VR] Failed to get My Documents folder path for crash logs" << std::endl;
         hang();
         return 1;
     }
 
     if (_mkdir((std::string(my_documents) + "\\BF2VR").c_str()) != 0) {
         if (errno != EEXIST) {
-            std::cout << "[BF2VR] Failed to create BF2VR folder in My Documents for crash logs" << std::endl;
+            std::cout << "[BF1VR] Failed to create BF2VR folder in My Documents for crash logs" << std::endl;
             hang();
             return 1;
         }
     }
 
-    std::cout << "Waiting for Battlefront II to start...";
-    while (!FindWindowA("Frostbite", "STAR WARS Battlefront II")) {
+    std::cout << "Waiting for Battlefront to start...";
+    while (!FindWindowA(nullptr, "STAR WARS Battlefront")) {
         Sleep(500);
         std::cout << ".";
     }
 
-    DWORD pid = PIDFromName("starwarsbattlefrontii.exe");
+    DWORD pid = PIDFromName("starwarsbattlefront.exe");
 
     // Ensure the DLL is in the right place.
     if (GetFileAttributes("BF2VR.dll") == INVALID_FILE_ATTRIBUTES) {
@@ -136,7 +136,7 @@ int main() {
         return 1;
     }
 
-    std::cout << "Injected BF2VR.dll into Battlefront II" << std::endl;
+    std::cout << "Injected BF2VR.dll into Battlefront" << std::endl;
     std::cout << "PID: " << pid << std::endl;
     Sleep(5000);
     return 0;

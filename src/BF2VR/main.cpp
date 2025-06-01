@@ -80,7 +80,7 @@ void Shutdown(int setupLevel, HMODULE hModule) {
 void FinalizeAsIs(int setupLevel, HMODULE hModule) {
     Logging::Log("[CORE] Loaded. Press END to unload BF2VR");
 
-    HWND ownWindow = FindWindowA("Frostbite", "STAR WARS Battlefront II");
+    HWND ownWindow = FindWindowA(nullptr, "STAR WARS Battlefront");
     if (ownWindow) {
         SetForegroundWindow(ownWindow);
         SetActiveWindow(ownWindow);

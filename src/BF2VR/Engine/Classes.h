@@ -1122,20 +1122,7 @@ class GameContext {
     }
 };  // Size: 0x0060
 
-class ClientPlayerManager
-{
-public:
-    char pad_0000[8];
-    class PlayerData* m_playerData;
-    uint32_t m_maxPlayerCount;      // 0x0010
-    uint32_t m_playerCountBitCount; // 0x0014
-    uint32_t m_playerIdBitCount;    // 0x0018
-    char pad_001C[224];
-    // Technically the players, spectators, have their own structure but they're similar enough that I can use the ServerPlayer
-    ClientPlayer* m_players[64]; // 0x0100 
-    ClientPlayer* m_spectators[64];
-    ClientPlayer* m_localPlayers[64];
-};  // Size: 0x0570
+
 
 class ClientPlayer {
  public:
@@ -1168,6 +1155,24 @@ class ClientSoldierPrediction {
     Vector3 velocity;  // 0x0034
 };  // Size: 0x0040
 
+class ClientPlayerManager
+{
+public:
+    char pad_0000[8];
+    class PlayerData* m_playerData;
+    uint32_t m_maxPlayerCount;      // 0x0010
+    uint32_t m_playerCountBitCount; // 0x0014
+    uint32_t m_playerIdBitCount;    // 0x0018
+    char pad_001C[224];
+    // Technically the players, spectators, have their own structure but they're similar enough that I can use the ServerPlayer
+    ClientPlayer* m_players[64]; // 0x0100 
+    ClientPlayer* m_spectators[64]; //I think swbf 2015 has eastl vectors of size 40. Will confirm soon
+    ClientPlayer* m_localPlayers[64];
+
+    class ClientPlayer* localPlayer;
+
+};  
+
 class LocalAimer {
  public:
     char pad_0000[152];  // 0x0000
@@ -1185,11 +1190,35 @@ class AimingComponentSwitch {
     char pad_0040[104];  // 0x0040
     class AimingComponentData* secondary;  // 0x00A8
 };  // Size: 0x00B0
-
+class QueryEntityResult
+{
+    int64_t PointerCastToInt;
+};
+enum Realm
+{
+    Realm_Client,
+    Realm_Server,
+    Realm_ClientAndServer,
+    Realm_None,
+    Realm_Pipeline,
+};
 class AimingComponentData {
  public:
-    unsigned char signature[12];  // 0x0000
-    char pad_000C[156];  // 0x000C
-    float yaw;  // 0x00A8
-    float pitch;  // 0x00AC
+     Vec3 TargetPosition;
+     QueryEntityResult TargetEntity;
+     Realm Realm;
+     float TrackHeatSignatureThreshold;
+     float Range;
+     float Pitch;
+     float Yaw;
+     float AngularTolerance;
+     float PitchVelocity;
+     float YawVelocity;
+     float OcclusionTimeout;
+     float UnoccupiedTimeout;
+     bool OverrideTargetPosition;
+     bool OverrideTargetEntity;
+     bool OverridePassiveRotation;
+     bool TrackVehicles;
+     bool TrackSoldiers;
 };  // Size: 0x00B4

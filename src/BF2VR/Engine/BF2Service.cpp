@@ -29,7 +29,7 @@ RenderView* BF2Service::CameraUpdate(RenderView* a1, RenderView* a2) {
     if (!isValidPtr(gameRenderer)) {
         return toReturn;
     }
-    gameRenderer->gameRenderSettings->forceFov = 100;  // Fixes some occulsion culling stuff and reflections
+    gameRenderer->gameRenderSettings->ForceFov = 100;  // Fixes some occulsion culling stuff and reflections
 
     // Wrong camera to update
     if (a2 != reinterpret_cast<void*>(gameRenderer->renderView)) {
@@ -70,6 +70,8 @@ RenderView* BF2Service::CameraUpdate(RenderView* a1, RenderView* a2) {
     // Disable TAA and local reflections
     WorldRenderSettings* worldRenderSettings = WorldRenderSettings::GetInstance();
     if (isValidPtr(worldRenderSettings)) {
+        //These settings don't exist in 2015
+        /*
         if (worldRenderSettings->aaDisocclusionFactor != 1.f) {
             worldRenderSettings->aaDisocclusionFactor = 1.f;
         }
@@ -85,14 +87,17 @@ RenderView* BF2Service::CameraUpdate(RenderView* a1, RenderView* a2) {
         if (worldRenderSettings->outdoorLightEnable) {
             worldRenderSettings->outdoorLightEnable = false;
         }
+        */
     }
 
     // Set post options for the user
     if (isValidPtr(postSettings)) {
         postSettings->ScreenSpaceRaytraceEnable = false;
+        //Setting names changed
+        /*
         postSettings->LensDistortionAllowed = false;
         postSettings->forceDofEnable = true;
-        postSettings->forceDofBlurFactor = 0.f;
+        postSettings->forceDofBlurFactor = 0.f;*/
     }
 
     // Calculate aim angles
@@ -110,14 +115,14 @@ RenderView* BF2Service::CameraUpdate(RenderView* a1, RenderView* a2) {
                 // The correct viewangle will start with 12 0xff bytes
                 int i = 0;
                 while (i < 12) {
-                    if (viewAngleSwitch->primary->signature[i] != 0xFF) {
-                        break;
-                    }
+                    //if (viewAngleSwitch->primary->signature[i] != 0xFF) {
+                    //    break;
+                    //}
                     i++;
                 }
                 if (i == 12) {
-                    viewAngleSwitch->primary->pitch = aimEuler.z - 1.22173f;
-                    viewAngleSwitch->primary->yaw = -aimEuler.y + 3.14159f;
+                    //viewAngleSwitch->primary->pitch = aimEuler.z - 1.22173f;
+                    //viewAngleSwitch->primary->yaw = -aimEuler.y + 3.14159f;
                     return toReturn;
                 }
             }
@@ -127,14 +132,15 @@ RenderView* BF2Service::CameraUpdate(RenderView* a1, RenderView* a2) {
                 // The correct viewangle will start with 12 0xff bytes
                 int i = 0;
                 while (i < 12) {
-                    if (viewAngleSwitch->secondary->signature[i] != 0xFF) {
-                        break;
-                    }
+                    //if (viewAngleSwitch->secondary->signature[i] != 0xFF) {
+                    //    break;
+                    //}
                     i++;
                 }
                 if (i == 12) {
-                    viewAngleSwitch->secondary->pitch = aimEuler.z - 1.22173f;
-                    viewAngleSwitch->secondary->yaw = -aimEuler.y + 3.14159f;
+                    //
+                    //viewAngleSwitch->secondary->pitch = aimEuler.z - 1.22173f;
+                    //viewAngleSwitch->secondary->yaw = -aimEuler.y + 3.14159f;
                     return toReturn;
                 }
             }
@@ -258,11 +264,11 @@ int BF2Service::Uninitialize() {
     if (!isValidPtr(gameRenderer)) {
         Logging::Log("[BF2] Unable to restore FOV");
     } else {
-        gameRenderer->gameRenderSettings->forceFov = -1;
+        gameRenderer->gameRenderSettings->ForceFov = -1;
     }
 
     if (isValidPtr(postSettings)) {
-        postSettings->forceDofEnable = false;
+        //postSettings->forceDofEnable = false;
         postSettings->ScreenSpaceRaytraceEnable = true;
     }
 

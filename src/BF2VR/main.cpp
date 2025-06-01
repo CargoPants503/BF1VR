@@ -64,7 +64,7 @@ void Shutdown(int setupLevel, HMODULE hModule) {
 
         // Reset window
         RECT rect;
-        HWND ownWindow = FindWindowA("Frostbite", "STAR WARS Battlefront II");
+        HWND ownWindow = FindWindowA(nullptr, "STAR WARS Battlefront");
         if (ownWindow) {
             GetWindowRect(ownWindow, &rect);
             SetWindowPos(ownWindow, 0, 0, 0, rect.right - 1, rect.bottom, 0);

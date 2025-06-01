@@ -1113,8 +1113,8 @@ public:
 class GameContext {
  public:
     char pad_0000[56];  // 0x0000
-    class GameSettings* gameSettings;  // 0x0038
-    char pad_0040[24];  // 0x0040
+    void* clientLevel;  //class GameSettings* gameSettings;  // 0x0038
+    char pad_0040[40];  // 0x0040
     class ClientPlayerManager* clientPlayerManager;  // 0x0058
 
     static GameContext* GetInstance() {
@@ -1164,12 +1164,13 @@ public:
     uint32_t m_playerCountBitCount; // 0x0014
     uint32_t m_playerIdBitCount;    // 0x0018
     char pad_001C[224];
-    // Technically the players, spectators, have their own structure but they're similar enough that I can use the ServerPlayer
-    ClientPlayer* m_players[64]; // 0x0100 
-    ClientPlayer* m_spectators[64]; //I think swbf 2015 has eastl vectors of size 40. Will confirm soon
-    ClientPlayer* m_localPlayers[64];
+    ClientPlayer* m_players[40]; // 0x0100 
+    ClientPlayer* m_spectators[40]; //I think swbf 2015 has eastl vectors of size 40. Will confirm soon
+    ClientPlayer* m_localPlayers[40];
 
-    class ClientPlayer* localPlayer;
+    char padding1[144];
+
+    class ClientPlayer* localPlayer; //starts at 0x550
 
 };  
 

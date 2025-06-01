@@ -104,7 +104,7 @@ HRESULT D3DService::PresentDetour(IDXGISwapChain* swapChain, UINT syncInterval, 
 
 int D3DService::CaptureResources() {
     // Get our own window
-    HWND ownWindow = FindWindowA("Frostbite", "STAR WARS Battlefront II");
+    HWND ownWindow = FindWindowA(nullptr, "STAR WARS Battlefront");
     if (!ownWindow) {
         Logging::Log("[D3D11] Could not find own window. Was the mod loaded too early?");
         return -1;
